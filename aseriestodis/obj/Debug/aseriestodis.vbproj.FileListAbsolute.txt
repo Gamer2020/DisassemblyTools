@@ -1,0 +1,11 @@
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\bin\Debug\aseriestodis.exe.config
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\bin\Debug\aseriestodis.exe
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\bin\Debug\aseriestodis.pdb
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\bin\Debug\aseriestodis.xml
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\obj\Debug\aseriestodis.vbprojAssemblyReference.cache
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\obj\Debug\aseriestodis.Resources.resources
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\obj\Debug\aseriestodis.vbproj.GenerateResource.cache
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\obj\Debug\aseriestodis.vbproj.CoreCompileInputs.cache
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\obj\Debug\aseriestodis.exe
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\obj\Debug\aseriestodis.xml
+C:\Users\Gamer2020\Desktop\DisassemblyConversionTools\aseriestodis\obj\Debug\aseriestodis.pdb
