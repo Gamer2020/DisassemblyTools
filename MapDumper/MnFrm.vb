@@ -219,7 +219,24 @@ Public Class MnFrm
 
             HeaderPointer = ((Val(("&H" & ReverseHEX(ReadHEX(LoadedROM, BankPointer + (MapNumber * 4), 4)))) - &H8000000))
 
+            If ((header2 = "BPR") Or (header2 = "BPG")) Then
 
+                ExportName = MapNameList.Items.Item(("&H" & (ReadHEX(LoadedROM, HeaderPointer + 20, 1))) - &H58)
+
+            ElseIf (mMain.header2 = "BPE") Then
+
+                ExportName = MapNameList.Items.Item("&H" & (ReadHEX(LoadedROM, HeaderPointer + 20, 1)))
+
+            ElseIf ((mMain.header2 = "AXP") Or (mMain.header2 = "AXV")) Then
+
+                ExportName = MapNameList.Items.Item("&H" & (ReadHEX(LoadedROM, HeaderPointer + 20, 1)))
+
+            End If
+
+
+            'ExportName = GetMapLabelName("&H" & (ReadHEX(LoadedROM, HeaderPointer + 20, 1))).Replace(" ", "_")
+
+            'outputtext = outputtext & "    .byte    0x" & (ReadHEX(LoadedROM, HeaderPointer + 20, 1)) & "  @Name" & vbLf
 
             If ((mMain.header2 = "BPR") Or (mMain.header2 = "BPG")) Then
 
@@ -233,19 +250,19 @@ Public Class MnFrm
 
             End If
 
-            If (Not System.IO.Directory.Exists(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & "Bank" & MapBank & "_Map" & MapNumber & "/")) Then
-                System.IO.Directory.CreateDirectory(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & "Bank" & MapBank & "_Map" & MapNumber & "/")
+            If (Not System.IO.Directory.Exists(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")) Then
+                System.IO.Directory.CreateDirectory(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")
             End If
 
-            File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & "Bank" & MapBank & "_Map" & MapNumber & "/" & "layout" & ".inc", outputtextFooter)
-            WriteHEX(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & "Bank" & MapBank & "_Map" & MapNumber & "/" & "border.bin", 0, BorderData)
-            WriteHEX(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & "Bank" & MapBank & "_Map" & MapNumber & "/" & "map.bin", 0, MapPermData)
+            File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "layout" & ".inc", outputtextFooter)
+            WriteHEX(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "border.bin", 0, BorderData)
+            WriteHEX(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "map.bin", 0, MapPermData)
 
-            If (Not System.IO.Directory.Exists(FolderBrowserDialog1.SelectedPath & "/data/maps/" & "Bank" & MapBank & "_Map" & MapNumber & "/")) Then
-                System.IO.Directory.CreateDirectory(FolderBrowserDialog1.SelectedPath & "/data/maps/" & "Bank" & MapBank & "_Map" & MapNumber & "/")
+            If (Not System.IO.Directory.Exists(FolderBrowserDialog1.SelectedPath & "/data/maps/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")) Then
+                System.IO.Directory.CreateDirectory(FolderBrowserDialog1.SelectedPath & "/data/maps/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")
             End If
 
-            File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/maps/" & "Bank" & MapBank & "_Map" & MapNumber & "/" & "header" & ".inc", outputtext)
+            File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/maps/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "header" & ".inc", outputtext)
 
             WriteHEX(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_PrimaryPal.bin", 0, PrimaryPals)
             WriteHEX(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryPal.bin", 0, SecondaryPals)

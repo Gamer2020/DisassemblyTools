@@ -16,6 +16,8 @@ Module mMain
     Public SkipVar As Integer
     Public x As Integer
 
+    Public ExportName As String
+
     Public SelectedPath As String
 
     Public Point2MapBankPointers As Integer
