@@ -251,5 +251,23 @@ Module mMain
         HexStringToByteArray = output
     End Function
 
+    Public Function ColorToPalText(inputcolor As Color()) As String
+        Dim output As String = ""
+        Dim palsaveloop As Integer = 0
+
+        output = output & "JASC-PAL" & vbCrLf
+        output = output & "0100" & vbCrLf
+        output = output & "16" & vbCrLf
+
+        While palsaveloop < inputcolor.Count
+
+            output = output & inputcolor(palsaveloop).R & " " & inputcolor(palsaveloop).G & " " & inputcolor(palsaveloop).B & vbCrLf
+
+            palsaveloop = palsaveloop + 1
+        End While
+
+        Return output
+    End Function
+
 
 End Module
