@@ -1865,7 +1865,7 @@ Public Class MnFrm
 
         Outputprimaryts = vbTab & ".align 2" & vbLf
 
-        Outputprimaryts = Outputprimaryts & "gTileset_" & ExportName & MapBank & "_" & MapNumber & "_PrimaryTileset::" & vbLf
+        Outputprimaryts = Outputprimaryts & "gTileset_" & ExportName & "_" & MapBank & "_" & MapNumber & "_PrimaryTileset::" & vbLf
 
         PrimaryTilesetCompression = "&H" & (ReadHEX(LoadedROM, PrimaryTilesetPointer, 1))
 
@@ -1948,7 +1948,7 @@ Public Class MnFrm
 
         Outputsecondaryts = vbTab & ".align 2" & vbLf
 
-        Outputsecondaryts = Outputsecondaryts & "gTileset_" & ExportName & MapBank & "_" & MapNumber & "_SecondaryTileset::" & vbLf
+        Outputsecondaryts = Outputsecondaryts & "gTileset_" & ExportName & "_" & MapBank & "_" & MapNumber & "_SecondaryTileset::" & vbLf
 
         SecondaryTilesetCompression = "&H" & (ReadHEX(LoadedROM, SecondaryTilesetPointer, 1))
 
