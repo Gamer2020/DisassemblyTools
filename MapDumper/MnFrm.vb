@@ -574,6 +574,81 @@ Public Class MnFrm
                 File.Delete(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryPal.bin")
             End If
 
+            'Image code goes here.
+            Dim PrimRect As New Rectangle(0, 0, 8, 4016)
+
+            Dim PrimTile As Bitmap = New Bitmap(PrimRect.Width, PrimRect.Height, Imaging.PixelFormat.Format4bppIndexed)
+
+            Dim ColorpalForIndex As Imaging.ColorPalette
+
+            ColorpalForIndex = PrimTile.Palette
+
+            ColorpalForIndex.Entries(0) = palsvar00(0)
+            ColorpalForIndex.Entries(1) = palsvar00(1)
+            ColorpalForIndex.Entries(2) = palsvar00(2)
+            ColorpalForIndex.Entries(3) = palsvar00(3)
+            ColorpalForIndex.Entries(4) = palsvar00(4)
+            ColorpalForIndex.Entries(5) = palsvar00(5)
+            ColorpalForIndex.Entries(6) = palsvar00(6)
+            ColorpalForIndex.Entries(7) = palsvar00(7)
+            ColorpalForIndex.Entries(8) = palsvar00(8)
+            ColorpalForIndex.Entries(9) = palsvar00(9)
+            ColorpalForIndex.Entries(10) = palsvar00(10)
+            ColorpalForIndex.Entries(11) = palsvar00(11)
+            ColorpalForIndex.Entries(12) = palsvar00(12)
+            ColorpalForIndex.Entries(13) = palsvar00(13)
+            ColorpalForIndex.Entries(14) = palsvar00(14)
+            ColorpalForIndex.Entries(15) = palsvar00(15)
+
+            PrimTile.Palette = ColorpalForIndex
+
+            Dim bmpdataprim As System.Drawing.Imaging.BitmapData = PrimTile.LockBits(PrimRect, Drawing.Imaging.ImageLockMode.ReadWrite, PrimTile.PixelFormat)
+            Dim pointerprim As IntPtr = bmpdataprim.Scan0
+
+            Dim numofbytesprim As Integer = Math.Abs(bmpdataprim.Stride) * PrimTile.Height
+            Dim Datavaluse(numofbytesprim - 1) As Byte
+
+            System.Runtime.InteropServices.Marshal.Copy(pointerprim, Datavaluse, 0, numofbytesprim)
+
+            Datavaluse = LoadTilesToBitsforimage(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_PrimaryTiles.bin", palsvar00, True, PrimRect.Height, PrimRect.Width, numofbytesprim)
+
+            System.Runtime.InteropServices.Marshal.Copy(Datavaluse, 0, pointerprim, numofbytesprim)
+
+            PrimTile.UnlockBits(bmpdataprim)
+
+            PrimTile.Save(FolderBrowserDialog1.SelectedPath & "/data/tilesets/primary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/tiles.png", Imaging.ImageFormat.Png)
+
+            Dim SecRect As New Rectangle(0, 0, 8, 2176)
+
+            Dim SecTile As Bitmap = New Bitmap(SecRect.Width, SecRect.Height, Imaging.PixelFormat.Format4bppIndexed)
+
+            SecTile.Palette = ColorpalForIndex
+
+            Dim bmpdatasec As System.Drawing.Imaging.BitmapData = SecTile.LockBits(SecRect, Drawing.Imaging.ImageLockMode.ReadWrite, SecTile.PixelFormat)
+            Dim pointersec As IntPtr = bmpdataSec.Scan0
+
+            Dim numofbytessec As Integer = Math.Abs(bmpdataSec.Stride) * SecTile.Height
+            Dim Datavaluse2(numofbytessec - 1) As Byte
+
+            System.Runtime.InteropServices.Marshal.Copy(pointersec, Datavaluse2, 0, numofbytessec)
+
+            Datavaluse2 = LoadTilesToBitsforimage(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin", palsvar00, True, SecRect.Height, SecRect.Width, numofbytessec)
+
+            System.Runtime.InteropServices.Marshal.Copy(Datavaluse2, 0, pointersec, numofbytessec)
+
+            SecTile.UnlockBits(bmpdatasec)
+
+            SecTile.Save(FolderBrowserDialog1.SelectedPath & "/data/tilesets/secondary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/tiles.png", Imaging.ImageFormat.Png)
+
+
+            If File.Exists(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_PrimaryTiles.bin") Then
+                File.Delete(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_PrimaryTiles.bin")
+            End If
+
+            If File.Exists(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin") Then
+                File.Delete(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin")
+            End If
+
             Me.Text = "Map Dumper"
             Me.UseWaitCursor = False
             Me.Enabled = True

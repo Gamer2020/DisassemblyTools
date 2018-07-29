@@ -1383,4 +1383,97 @@ ErrorHandle:
 
     End Function
 
+    Public Function LoadTilesToBitmap(ImgFile As String, Palette32() As Color, IsCompressed As Boolean, ShowBackColor As Boolean) As Bitmap
+
+        Dim sOffset As Integer = 0
+        Dim pOffset As Integer = 0
+        Dim Temp(&HFFFF) As Byte
+        Dim Image(&HFFFF) As Byte
+        Dim Palette15(&HFFF) As Byte
+        Dim bSprite As Bitmap
+
+        Using fs As New FileStream(ImgFile, FileMode.Open, FileAccess.Read)
+            Using r As New BinaryReader(fs)
+                fs.Position = sOffset
+                r.Read(Temp, 0, &HFFFF)
+
+                If IsCompressed = True Then
+                    LZ77UnComp(Temp, Image)
+                Else
+                    Image = Temp
+                End If
+
+            End Using
+        End Using
+
+
+        bSprite = LoadSprite(Image, Palette32, 128, 256, ShowBackColor)
+
+        LoadTilesToBitmap = bSprite
+
+    End Function
+
+    Public Function LoadTilesToBitsforimage(ImgFile As String, Palette32() As Color, IsCompressed As Boolean, imageheight As Integer, imagewidth As Integer, bytesnum As Integer) As Byte()
+
+        Dim infoReader As System.IO.FileInfo = My.Computer.FileSystem.GetFileInfo(ImgFile)
+
+        Dim sOffset As Integer = 0
+        Dim Temp(infoReader.Length) As Byte
+        Dim Image(bytesnum - 1) As Byte
+        Dim bSprite As Byte()
+
+        bSprite = New Byte(((imageheight * imagewidth) / 2) - 1) {}
+
+        Using fs As New FileStream(ImgFile, FileMode.Open, FileAccess.Read)
+            Using r As New BinaryReader(fs)
+                fs.Position = sOffset
+                r.Read(Temp, 0, infoReader.Length)
+
+                If IsCompressed = True Then
+                    LZ77UnComp(Temp, Image)
+                Else
+                    Image = Temp
+                End If
+
+            End Using
+        End Using
+
+
+        bSprite = LoadSpriteToBits(Image, Palette32, imagewidth, imageheight)
+
+        LoadTilesToBitsforimage = bSprite
+
+    End Function
+
+    Public Function LoadSpriteToBits(ByRef Bits() As Byte, ByVal Palette() As Color, Optional ByVal Width As Integer = 64, Optional ByVal Height As Integer = 64) As Byte()
+        On Error GoTo ErrorHandle
+        Dim x1 As Integer, y1 As Integer
+        Dim x2 As Integer, y2 As Integer
+        Dim bmpTiles As Byte()
+        Dim Temp As Byte
+        Dim i As Integer
+
+        bmpTiles = New Byte(Bits.Count) {}
+
+        For y1 = 0 To Height - 8 Step 8
+            For x1 = 0 To Width - 8 Step 8
+                For y2 = 0 To 7
+                    For x2 = 0 To 7 Step 2
+                        Temp = Bits(i)
+
+                        'bmpTiles.SetPixel(x1 + x2 + 1, y1 + y2, Palette((Temp And &HF0) / &H10))
+                        'bmpTiles.SetPixel(x1 + x2, y1 + y2, Palette(Temp And &HF))
+
+                        bmpTiles(i) = "&H" & Hex((Temp And &HF0) / &H10) & Hex(Temp And &HF)
+                        'bmpTiles(i) = (Temp And &HF)
+
+                        i = i + 1
+                    Next
+                Next
+            Next
+        Next
+
+        LoadSpriteToBits = bmpTiles
+ErrorHandle:
+    End Function
 End Module
