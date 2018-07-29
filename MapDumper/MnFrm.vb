@@ -1725,19 +1725,23 @@ Public Class MnFrm
 
         Map_Footer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, HeaderPointer, 4))) - &H8000000
 
-        outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Footer" & "  @Footer" & vbLf
+        'outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Footer" & "  @Footer" & vbLf
+        outputtext = outputtext & "    .4byte    " & ExportName & "_" & MapBank & "_" & MapNumber & "_Layout" & "  @Footer" & vbLf
 
         Map_Events = ("&H" & ReverseHEX(ReadHEX(LoadedROM, HeaderPointer + 4, 4))) - &H8000000
 
-        outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Events" & "  @Events" & vbLf
+        'outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Events" & "  @Events" & vbLf
+        outputtext = outputtext & "    .4byte    " & "0x0" & "  @Events" & vbLf
 
         Map_Level_Scripts = ("&H" & ReverseHEX(ReadHEX(LoadedROM, HeaderPointer + 8, 4))) - &H8000000
 
-        outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Level_Scripts" & "  @Level Scripts" & vbLf
+        'outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Level_Scripts" & "  @Level Scripts" & vbLf
+        outputtext = outputtext & "    .4byte    " & "0x0" & "  @Level Scripts" & vbLf
 
         Map_Connection_Header = ("&H" & ReverseHEX(ReadHEX(LoadedROM, HeaderPointer + 12, 4))) - &H8000000
 
-        outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Connections_Header" & "  @Connections" & vbLf
+        'outputtext = outputtext & "    .4byte    " & "Bank" & MapBank & "_Map" & MapNumber & "_Connections_Header" & "  @Connections" & vbLf
+        outputtext = outputtext & "    .4byte    " & "0x0" & "  @Connections" & vbLf
 
         outputtext = outputtext & "    .2byte    0x" & ReverseHEX(ReadHEX(LoadedROM, HeaderPointer + 16, 2)) & "  @Music" & vbLf
         outputtext = outputtext & "    .2byte    0x" & ReverseHEX(ReadHEX(LoadedROM, HeaderPointer + 18, 2)) & "  @Footer ID" & vbLf
