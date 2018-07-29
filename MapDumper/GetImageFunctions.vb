@@ -1418,7 +1418,9 @@ ErrorHandle:
         Dim infoReader As System.IO.FileInfo = My.Computer.FileSystem.GetFileInfo(ImgFile)
 
         Dim sOffset As Integer = 0
-        Dim Temp(infoReader.Length) As Byte
+        'Dim Temp(infoReader.Length) As Byte
+        'Dim Image(bytesnum - 1) As Byte
+        Dim Temp(&HFFFFFF) As Byte
         Dim Image(bytesnum - 1) As Byte
         Dim bSprite As Byte()
 
@@ -1427,10 +1429,11 @@ ErrorHandle:
         Using fs As New FileStream(ImgFile, FileMode.Open, FileAccess.Read)
             Using r As New BinaryReader(fs)
                 fs.Position = sOffset
-                r.Read(Temp, 0, infoReader.Length)
+                r.Read(Temp, 0, &HFFFFFF)
 
                 If IsCompressed = True Then
                     LZ77UnComp(Temp, Image)
+                    ' Image = DecompressBytes(Temp)
                 Else
                     Image = Temp
                 End If
@@ -1442,6 +1445,49 @@ ErrorHandle:
         bSprite = LoadSpriteToBits(Image, Palette32, imagewidth, imageheight)
 
         LoadTilesToBitsforimage = bSprite
+
+    End Function
+
+    Public Function LoadTilesToBitsforimage2(ImgFile As String, Palette32() As Color, IsCompressed As Boolean, imageheight As Integer, imagewidth As Integer, bytesnum As Integer) As Byte()
+
+        Dim infoReader As System.IO.FileInfo = My.Computer.FileSystem.GetFileInfo(ImgFile)
+
+        Dim sOffset As Integer = 0
+        'Dim Temp(infoReader.Length) As Byte
+        'Dim Image(bytesnum - 1) As Byte
+        Dim Temp(&HFFFFFF) As Byte
+        Dim Image(bytesnum - 1) As Byte
+        Dim bSprite As Byte()
+
+        bSprite = New Byte(((imageheight * imagewidth) / 2) - 1) {}
+
+        'If IsCompressed = True Then
+
+        '    Image = DecompressBytes(HexStringToByteArray(ReadHEX(ImgFile, 0, infoReader.Length)))
+
+        'Else
+        '    Image = (HexStringToByteArray(ReadHEX(ImgFile, 0, infoReader.Length)))
+        'End If
+
+        Using fs As New FileStream(ImgFile, FileMode.Open, FileAccess.Read)
+            Using r As New BinaryReader(fs)
+                fs.Position = sOffset
+                r.Read(Temp, 0, &HFFFFFF)
+
+                If IsCompressed = True Then
+                    LZ77UnComp(Temp, Image)
+                    ' Image = DecompressBytes(Temp)
+                Else
+                    Image = Temp
+                End If
+
+            End Using
+        End Using
+
+
+        bSprite = LoadSpriteToBits(Image, Palette32, imagewidth, imageheight)
+
+        LoadTilesToBitsforimage2 = bSprite
 
     End Function
 
@@ -1464,7 +1510,7 @@ ErrorHandle:
                         'bmpTiles.SetPixel(x1 + x2 + 1, y1 + y2, Palette((Temp And &HF0) / &H10))
                         'bmpTiles.SetPixel(x1 + x2, y1 + y2, Palette(Temp And &HF))
 
-                        bmpTiles(i) = "&H" & Hex((Temp And &HF0) / &H10) & Hex(Temp And &HF)
+                        bmpTiles(i) = "&H" & Hex(Temp And &HF) & Hex((Temp And &HF0) / &H10)
                         'bmpTiles(i) = (Temp And &HF)
 
                         i = i + 1

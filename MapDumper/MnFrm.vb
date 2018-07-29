@@ -575,7 +575,7 @@ Public Class MnFrm
             End If
 
             'Image code goes here.
-            Dim PrimRect As New Rectangle(0, 0, 8, 4016)
+            Dim PrimRect As New Rectangle(0, 0, 8, (20480 * 2) / 8)
 
             Dim PrimTile As Bitmap = New Bitmap(PrimRect.Width, PrimRect.Height, Imaging.PixelFormat.Format4bppIndexed)
 
@@ -618,7 +618,7 @@ Public Class MnFrm
 
             PrimTile.Save(FolderBrowserDialog1.SelectedPath & "/data/tilesets/primary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/tiles.png", Imaging.ImageFormat.Png)
 
-            Dim SecRect As New Rectangle(0, 0, 8, 2176)
+            Dim SecRect As New Rectangle(0, 0, 8, ((16384 * 2) / 8))
 
             Dim SecTile As Bitmap = New Bitmap(SecRect.Width, SecRect.Height, Imaging.PixelFormat.Format4bppIndexed)
 
@@ -632,7 +632,7 @@ Public Class MnFrm
 
             System.Runtime.InteropServices.Marshal.Copy(pointersec, Datavaluse2, 0, numofbytessec)
 
-            Datavaluse2 = LoadTilesToBitsforimage(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin", palsvar00, True, SecRect.Height, SecRect.Width, numofbytessec)
+            Datavaluse2 = LoadTilesToBitsforimage2(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin", palsvar00, True, SecRect.Height, SecRect.Width, numofbytessec)
 
             System.Runtime.InteropServices.Marshal.Copy(Datavaluse2, 0, pointersec, numofbytessec)
 
