@@ -8,6 +8,7 @@ Public Class MnFrm
     Dim Outputprimaryts As String
     Dim Outputsecondaryts As String
     Dim Outputmetatiles As String
+    Dim Outputgraphicsfile As String
     Dim outputlevel2 As String
     Dim outputlevel4 As String
 
@@ -476,6 +477,62 @@ Public Class MnFrm
 
             If File.Exists(FolderBrowserDialog1.SelectedPath & "/data/tilesets/secondary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/metatile_attributes.bin") Then
                 File.Delete(FolderBrowserDialog1.SelectedPath & "/data/tilesets/secondary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/metatile_attributes.bin")
+            End If
+
+            Outputgraphicsfile = vbTab & ".align 2" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & "gTilesetTiles_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Primary::" & "" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/tiles.4bpp.lz" & """" & vbLf & vbLf
+
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".align 2" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & "gTilesetPalettes_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Primary::" & "" & vbLf
+
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/00.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/01.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/02.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/03.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/04.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/05.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/06.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/07.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/08.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/09.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/10.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/11.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/12.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/13.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/14.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/primary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/15.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbLf
+
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".align 2" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & "gTilesetTiles_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Secondary::" & "" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/tiles.4bpp.lz" & """" & vbLf & vbLf
+
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".align 2" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & "gTilesetPalettes_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Secondary::" & "" & vbLf
+
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/00.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/01.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/02.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/03.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/04.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/05.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/06.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/07.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/08.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/09.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/10.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/11.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/12.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/13.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/14.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbTab & ".incbin " & """" & "data/tilesets/secondary/palettes/" & ExportName & "_" & MapBank & "_" & MapNumber & "/15.gbapal" & """" & vbLf
+            Outputgraphicsfile = Outputgraphicsfile & vbLf
+
+            If File.Exists(FolderBrowserDialog1.SelectedPath & "/data/tilesets/graphics.inc") Then
+                File.AppendAllText(FolderBrowserDialog1.SelectedPath & "/data/tilesets/graphics.inc", Outputgraphicsfile)
+            Else
+                File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/tilesets/graphics.inc", Outputgraphicsfile)
             End If
 
             File.Move(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_PrimaryBlocks.bin", FolderBrowserDialog1.SelectedPath & "/data/tilesets/primary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/metatiles.bin")
