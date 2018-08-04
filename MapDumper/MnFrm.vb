@@ -9,6 +9,8 @@ Public Class MnFrm
     Dim Outputsecondaryts As String
     Dim Outputmetatiles As String
     Dim Outputgraphicsfile As String
+    Dim LayoutsTableText As String
+    Dim LayoutsText As String
     Dim outputlevel2 As String
     Dim outputlevel4 As String
 
@@ -704,6 +706,27 @@ Public Class MnFrm
 
             If File.Exists(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin") Then
                 File.Delete(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin")
+            End If
+
+            'layouts text stuff
+
+            LayoutsText = vbTab & ".include " & """" & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/layouts.inc" & """" & vbLf
+
+            LayoutsTableText = vbTab & ".4byte " & ExportName & "_" & MapBank & "_" & MapNumber & "_Layout" & vbLf
+
+            If File.Exists(FolderBrowserDialog1.SelectedPath & "/data/layouts.inc") Then
+                File.AppendAllText(FolderBrowserDialog1.SelectedPath & "/data/layouts.inc", LayoutsText)
+            Else
+                File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/layouts.inc", LayoutsText)
+            End If
+
+            If File.Exists(FolderBrowserDialog1.SelectedPath & "/data/layouts_table.inc") Then
+                File.AppendAllText(FolderBrowserDialog1.SelectedPath & "/data/layouts_table.inc", LayoutsTableText)
+            Else
+
+                LayoutsTableText = vbTab & ".align 2" & vbLf & "gMapLayouts::" & vbLf & LayoutsTableText
+
+                File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/layouts_table.inc", LayoutsTableText)
             End If
 
             Me.Text = "Map Dumper"

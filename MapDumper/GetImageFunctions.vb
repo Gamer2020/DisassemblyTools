@@ -961,7 +961,7 @@ ErrorHandle:
 
                     End If
 
-                ElseIf curbit = "True"
+                ElseIf curbit = "True" Then
 
                     If CurSquare = 0 Then
 
