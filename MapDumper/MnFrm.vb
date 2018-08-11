@@ -4,9 +4,9 @@ Imports VB = Microsoft.VisualBasic
 Public Class MnFrm
 
     Public OutPutHeaderText As String
+    Public OutPutEventText As String
+    Public OutPutLayoutText As String
 
-
-    Public outputtextFooter As String
     Public Outputprimaryts As String
     Public Outputsecondaryts As String
     Public Outputmetatiles As String
@@ -218,6 +218,8 @@ Public Class MnFrm
 
             GetInitialPointers()
             GenerateHeader()
+            GenerateEvents()
+            GenerateLayout()
 
             Me.Text = "Map Dumper"
         Me.UseWaitCursor = False
@@ -257,7 +259,7 @@ Public Class MnFrm
         OutPutHeaderText = ExportName & "_" & MapBank & "_" & MapNumber & "_Header:" & vbLf
 
         OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & ExportName & "_" & MapBank & "_" & MapNumber & "_Layout" & "  @Footer" & vbLf
-        OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & "0x0" & "  @Events" & vbLf
+        OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & ExportName & "_" & MapBank & "_" & MapNumber & "_MapEvents" & "  @Events" & vbLf
         OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & "0x0" & "  @Level Scripts" & vbLf
         OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & "0x0" & "  @Connections" & vbLf
 
@@ -300,6 +302,53 @@ Public Class MnFrm
         End If
 
         File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/maps/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "header" & ".inc", OutPutHeaderText)
+
+    End Sub
+
+    Private Sub GenerateEvents()
+        OutPutEventText = ExportName & "_" & MapBank & "_" & MapNumber & "_MapEvents::" & vbLf
+        File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/maps/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "events" & ".inc", OutPutEventText)
+    End Sub
+
+    Private Sub GenerateLayout()
+        OutPutLayoutText = ""
+
+        OutPutLayoutText = OutPutLayoutText & ExportName & "_" & MapBank & "_" & MapNumber & "_MapBorder::" & vbLf
+        OutPutLayoutText = OutPutLayoutText & vbTab & ".incbin " & """" & "data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "border.bin" & """" & vbLf & vbLf
+
+        OutPutLayoutText = OutPutLayoutText & ExportName & "_" & MapBank & "_" & MapNumber & "_MapBlockdata::" & vbLf
+        OutPutLayoutText = OutPutLayoutText & vbTab & ".incbin " & """" & "data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "map.bin" & """" & vbLf & vbLf
+
+        OutPutLayoutText = OutPutLayoutText & vbTab & ".align 2" & vbLf
+        OutPutLayoutText = OutPutLayoutText & ExportName & "_" & MapBank & "_" & MapNumber & "_Layout::" & vbLf
+        OutPutLayoutText = OutPutLayoutText & "    .4byte    0x" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer, 4)) & "  @Map Width" & vbLf
+        OutPutLayoutText = OutPutLayoutText & "    .4byte    0x" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer + 4, 4)) & "  @Map Height" & vbLf
+        OutPutLayoutText = OutPutLayoutText & "    .4byte    " & ExportName & "_" & MapBank & "_" & MapNumber & "_MapBorder" & "  @Border Data" & vbLf
+        OutPutLayoutText = OutPutLayoutText & "    .4byte    " & ExportName & "_" & MapBank & "_" & MapNumber & "_MapBlockdata" & "  @Map data / Movement Permissons" & vbLf
+        OutPutLayoutText = OutPutLayoutText & "    .4byte    gTileset_" & ExportName & "_" & MapBank & "_" & MapNumber & "_PrimaryTileset" & "  @Primary Tileset" & vbLf
+        OutPutLayoutText = OutPutLayoutText & "    .4byte    gTileset_" & ExportName & "_" & MapBank & "_" & MapNumber & "_SecondaryTileset" & "  @Secondary Tileset" & vbLf
+
+
+        MapWidth = ("&H" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer, 4)))
+        MapHeight = ("&H" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer + 4, 4)))
+        BorderPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer + 8, 4))) - &H8000000
+        MapDataPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer + 12, 4))) - &H8000000
+        PrimaryTilesetPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer + 16, 4))) - &H8000000
+        SecondaryTilesetPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer + 20, 4))) - &H8000000
+
+        BorderHeight = 2
+        BorderWidth = 2
+
+        BorderData = ReadHEX(LoadedROM, BorderPointer, (BorderHeight * BorderWidth) * 2)
+
+        MapPermData = ReadHEX(LoadedROM, MapDataPointer, (MapHeight * MapWidth) * 2)
+
+        If (Not System.IO.Directory.Exists(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")) Then
+            System.IO.Directory.CreateDirectory(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")
+        End If
+
+        File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/layouts/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "layout" & ".inc", OutPutLayoutText)
+
 
     End Sub
 
