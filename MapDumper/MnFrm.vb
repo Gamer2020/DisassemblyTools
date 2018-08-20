@@ -352,4 +352,86 @@ Public Class MnFrm
 
     End Sub
 
+    Private Sub GeneratePrimaryTileset()
+
+        Outputprimaryts = vbTab & ".align 2" & vbLf
+
+        Outputprimaryts = Outputprimaryts & "gTileset_" & ExportName & "_" & MapBank & "_" & MapNumber & "_PrimaryTileset::" & vbLf
+
+        PrimaryTilesetCompression = "&H" & (ReadHEX(LoadedROM, PrimaryTilesetPointer, 1))
+
+        Outputprimaryts = Outputprimaryts & "    .byte    0x" & (ReadHEX(LoadedROM, PrimaryTilesetPointer, 1)) & "  @Is Compressed?" & vbLf
+        Outputprimaryts = Outputprimaryts & "    .byte    0x" & (ReadHEX(LoadedROM, PrimaryTilesetPointer + 1, 1)) & "  @Is secondary tileset" & vbLf
+        Outputprimaryts = Outputprimaryts & "    .2byte    0x" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 2, 2)) & "  @Padding?" & vbLf
+
+        PrimaryImagePointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 4, 4))) - &H8000000
+
+        Outputprimaryts = Outputprimaryts & "    .4byte    gTilesetTiles_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Primary" & "  @Image Pointer" & vbLf
+
+        PrimaryPalPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 8, 4))) - &H8000000
+
+        Outputprimaryts = Outputprimaryts & "    .4byte    gTilesetPalettes_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Primary" & "  @Pallete Pointer" & vbLf
+
+        PrimaryBlockSetPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 12, 4))) - &H8000000
+
+        Outputprimaryts = Outputprimaryts & "    .4byte    gMetatiles_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Primary" & "  @blockset_data" & vbLf
+
+
+        If ((mMain.header2 = "BPR") Or (mMain.header2 = "BPG")) Then
+            PrimaryBehaviourPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 20, 4))) - &H8000000
+        ElseIf (mMain.header2 = "BPE") Or ((mMain.header2 = "AXP") Or (mMain.header2 = "AXV")) Then
+            PrimaryBehaviourPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 16, 4))) - &H8000000
+        End If
+
+        Outputprimaryts = Outputprimaryts & "    .4byte    gMetatileAttributes_" & ExportName & "_" & MapBank & "_" & MapNumber & "_Primary" & "  @behavioural_bg_bytes" & vbLf
+
+        Outputprimaryts = Outputprimaryts & "    .4byte    0x0" & "  @Animation routine" & vbLf
+
+        Outputprimaryts = Outputprimaryts & vbLf
+
+        'If ((mMain.header2 = "BPR") Or (mMain.header2 = "BPG")) Then
+        'outputtext = outputtext & "    .long    0x" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 16, 4)) & "  @Animation routine" & vbLf
+        'ElseIf (mMain.header2 = "BPE") Or ((mMain.header2 = "AXP") Or (mMain.header2 = "AXV")) Then
+        'outputtext = outputtext & "    .long    0x" & ReverseHEX(ReadHEX(LoadedROM, PrimaryTilesetPointer + 20, 4)) & "  @Animation routine" & vbLf
+        'End If
+
+        If ((mMain.header2 = "BPR") Or (mMain.header2 = "BPG")) Then
+            PrimaryPals = ReadHEX(LoadedROM, PrimaryPalPointer, 7 * (16 * 2))
+        ElseIf (mMain.header2 = "BPE") Or ((mMain.header2 = "AXP") Or (mMain.header2 = "AXV")) Then
+            PrimaryPals = ReadHEX(LoadedROM, PrimaryPalPointer, 6 * (16 * 2))
+        End If
+
+        If ((mMain.header2 = "BPR") Or (mMain.header2 = "BPG")) Then
+            If PrimaryTilesetCompression = 1 Then
+
+                PrimaryTilesImg = MapTilesCompressedtoHexStringFRPrim(PrimaryImagePointer, PrimaryPalPointer)
+
+            ElseIf PrimaryTilesetCompression = 0 Then
+
+                PrimaryTilesImg = ReadHEX(LoadedROM, PrimaryImagePointer, 20480)
+
+            End If
+        ElseIf (mMain.header2 = "BPE") Or ((mMain.header2 = "AXP") Or (mMain.header2 = "AXV")) Then
+            If PrimaryTilesetCompression = 1 Then
+
+                PrimaryTilesImg = MapTilesCompressedtoHexString(PrimaryImagePointer, PrimaryPalPointer)
+
+            ElseIf PrimaryTilesetCompression = 0 Then
+
+                PrimaryTilesImg = ReadHEX(LoadedROM, PrimaryImagePointer, 16384)
+
+            End If
+        End If
+
+        If ((mMain.header2 = "BPR") Or (mMain.header2 = "BPG")) Then
+            PrimaryBlocks = ReadHEX(LoadedROM, PrimaryBlockSetPointer, 16 * 640)
+
+            PrimaryBehaviors = ReadHEX(LoadedROM, PrimaryBehaviourPointer, 4 * 640)
+        ElseIf (mMain.header2 = "BPE") Or ((mMain.header2 = "AXP") Or (mMain.header2 = "AXV")) Then
+            PrimaryBlocks = ReadHEX(LoadedROM, PrimaryBlockSetPointer, 16 * 512)
+
+            PrimaryBehaviors = ReadHEX(LoadedROM, PrimaryBehaviourPointer, 2 * 512)
+        End If
+    End Sub
+
 End Class
