@@ -5,9 +5,9 @@ Public Class MnFrm
 
 <<<<<<< HEAD
     Public OutPutHeaderText As String
-    Public OutPutEventText As String
-    Public OutPutLayoutText As String
 
+
+    Public outputtextFooter As String
     Public Outputprimaryts As String
     Public Outputsecondaryts As String
     Public Outputmetatiles As String
@@ -1898,7 +1898,12 @@ Public Class MnFrm
 
         outputtextFooter = outputtextFooter & "    .4byte    gTileset_" & ExportName & "_" & MapBank & "_" & MapNumber & "_PrimaryTileset" & "  @Primary Tileset" & vbLf
 
+<<<<<<< HEAD
         SecondaryTilesetPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, Map_Footer + 20, 4))) - &H8000000
+=======
+            GetInitialPointers()
+            GenerateHeader()
+>>>>>>> parent of 45db6ae... Starting over...
 
         outputtextFooter = outputtextFooter & "    .4byte    gTileset_" & ExportName & "_" & MapBank & "_" & MapNumber & "_SecondaryTileset" & "  @Secondary Tileset" & vbLf
 
@@ -1988,9 +1993,16 @@ Public Class MnFrm
         If ((mMain.header2 = "BPR") Or (mMain.header2 = "BPG")) Then
             PrimaryBlocks = ReadHEX(LoadedROM, PrimaryBlockSetPointer, 16 * 640)
 
+<<<<<<< HEAD
             PrimaryBehaviors = ReadHEX(LoadedROM, PrimaryBehaviourPointer, 4 * 640)
         ElseIf (mMain.header2 = "BPE") Or ((mMain.header2 = "AXP") Or (mMain.header2 = "AXV")) Then
             PrimaryBlocks = ReadHEX(LoadedROM, PrimaryBlockSetPointer, 16 * 512)
+=======
+        OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & ExportName & "_" & MapBank & "_" & MapNumber & "_Layout" & "  @Footer" & vbLf
+        OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & "0x0" & "  @Events" & vbLf
+        OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & "0x0" & "  @Level Scripts" & vbLf
+        OutPutHeaderText = OutPutHeaderText & vbTab & ".4byte " & "0x0" & "  @Connections" & vbLf
+>>>>>>> parent of 45db6ae... Starting over...
 
             PrimaryBehaviors = ReadHEX(LoadedROM, PrimaryBehaviourPointer, 2 * 512)
         End If
@@ -2418,6 +2430,7 @@ Public Class MnFrm
 
     End Sub
 
+<<<<<<< HEAD
     Private Sub GenerateEvents()
         OutPutEventText = ExportName & "_" & MapBank & "_" & MapNumber & "_MapEvents::" & vbLf
         File.WriteAllText(FolderBrowserDialog1.SelectedPath & "/data/maps/" & ExportName & "_" & MapBank & "_" & MapNumber & "/" & "events" & ".inc", OutPutEventText)
@@ -2556,4 +2569,6 @@ Public Class MnFrm
 
     End Sub
 
+=======
+>>>>>>> parent of 45db6ae... Starting over...
 End Class
