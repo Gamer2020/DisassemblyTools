@@ -852,6 +852,7 @@ Public Class MnFrm
 
         'Primary Tileset
 
+<<<<<<< HEAD
         'outputtext = outputtext & vbLf
 
         'outputtext = outputtext & ".align 2" & vbLf
@@ -2571,4 +2572,8 @@ Public Class MnFrm
 
 =======
 >>>>>>> parent of 45db6ae... Starting over...
+=======
+    End Sub
+
+>>>>>>> parent of 327674a... Honestly I don't remember what I was doing but I guess it is progress...
 End Class
