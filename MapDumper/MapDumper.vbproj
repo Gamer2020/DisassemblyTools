@@ -71,7 +71,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="decommed.vb" />
     <Compile Include="GetImageFunctions.vb" />
     <Compile Include="HexFunctions.vb" />
     <Compile Include="LZ77.vb" />
@@ -102,7 +101,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="NSELZZ.vb" />
-    <Compile Include="pokeemerald.vb" />
     <Compile Include="WichuRomFunctions.vb" />
     <Compile Include="WichuSpriteFunctions.vb" />
   </ItemGroup>
