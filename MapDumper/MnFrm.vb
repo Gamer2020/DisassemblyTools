@@ -432,6 +432,15 @@ Public Class MnFrm
 
             PrimaryBehaviors = ReadHEX(LoadedROM, PrimaryBehaviourPointer, 2 * 512)
         End If
+
+        If (Not System.IO.Directory.Exists(FolderBrowserDialog1.SelectedPath & "/data/tilesets/primary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")) Then
+            System.IO.Directory.CreateDirectory(FolderBrowserDialog1.SelectedPath & "/data/tilesets/primary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")
+        End If
+
+        If (Not System.IO.Directory.Exists(FolderBrowserDialog1.SelectedPath & "/data/tilesets/secondary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")) Then
+            System.IO.Directory.CreateDirectory(FolderBrowserDialog1.SelectedPath & "/data/tilesets/secondary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/")
+        End If
+
     End Sub
 
 End Class
