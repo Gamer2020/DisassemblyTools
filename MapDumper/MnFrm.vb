@@ -920,6 +920,7 @@ Public Class MnFrm
 
         SecondaryPalPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, SecondaryTilesetPointer + 8, 4))) - &H8000000
 
+<<<<<<< HEAD
         'outputtext = outputtext & "    .long    Bank" & MapBank & "_Map" & MapNumber & "_SecondaryPal" & "  @Pallete Pointer" & vbLf
 
         SecondaryBlockSetPointer = ("&H" & ReverseHEX(ReadHEX(LoadedROM, SecondaryTilesetPointer + 12, 4))) - &H8000000
@@ -2573,6 +2574,10 @@ Public Class MnFrm
 =======
 >>>>>>> parent of 45db6ae... Starting over...
 =======
+=======
+            PrimaryBehaviors = ReadHEX(LoadedROM, PrimaryBehaviourPointer, 2 * 512)
+        End If
+>>>>>>> parent of 74c1b36... Comitting to revert.
     End Sub
 
 >>>>>>> parent of 327674a... Honestly I don't remember what I was doing but I guess it is progress...
