@@ -635,6 +635,7 @@ Public Class MnFrm
 
             'Image code goes here.
             Dim PrimRect As New Rectangle(0, 0, 8, (20480 * 2) / 8)
+            'Dim PrimRect As New Rectangle(0, 0, 128, 256)
 
             Dim PrimTile As Bitmap = New Bitmap(PrimRect.Width, PrimRect.Height, Imaging.PixelFormat.Format4bppIndexed)
 
@@ -671,6 +672,8 @@ Public Class MnFrm
 
             Datavaluse = LoadTilesToBitsforimage(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_PrimaryTiles.bin", palsvar00, True, PrimRect.Height, PrimRect.Width, numofbytesprim)
 
+            'Datavaluse = WriteImageToBits(Datavaluse, LoadTilesToBitmap(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_PrimaryTiles.bin", palsvar02, True, True), palsvar02)
+
             System.Runtime.InteropServices.Marshal.Copy(Datavaluse, 0, pointerprim, numofbytesprim)
 
             PrimTile.UnlockBits(bmpdataprim)
@@ -678,20 +681,22 @@ Public Class MnFrm
             PrimTile.Save(FolderBrowserDialog1.SelectedPath & "/data/tilesets/primary/" & ExportName & "_" & MapBank & "_" & MapNumber & "/tiles.png", Imaging.ImageFormat.Png)
 
             Dim SecRect As New Rectangle(0, 0, 8, ((16384 * 2) / 8))
+            'Dim SecRect As New Rectangle(0, 0, 128, 256)
 
             Dim SecTile As Bitmap = New Bitmap(SecRect.Width, SecRect.Height, Imaging.PixelFormat.Format4bppIndexed)
 
             SecTile.Palette = ColorpalForIndex
 
             Dim bmpdatasec As System.Drawing.Imaging.BitmapData = SecTile.LockBits(SecRect, Drawing.Imaging.ImageLockMode.ReadWrite, SecTile.PixelFormat)
-            Dim pointersec As IntPtr = bmpdataSec.Scan0
+            Dim pointersec As IntPtr = bmpdatasec.Scan0
 
-            Dim numofbytessec As Integer = Math.Abs(bmpdataSec.Stride) * SecTile.Height
+            Dim numofbytessec As Integer = Math.Abs(bmpdatasec.Stride) * SecTile.Height
             Dim Datavaluse2(numofbytessec - 1) As Byte
 
             System.Runtime.InteropServices.Marshal.Copy(pointersec, Datavaluse2, 0, numofbytessec)
 
             Datavaluse2 = LoadTilesToBitsforimage2(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin", palsvar00, True, SecRect.Height, SecRect.Width, numofbytessec)
+            'Datavaluse2 = WriteImageToBits(Datavaluse2, LoadTilesToBitmap(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryTiles.bin", palsvar02, True, True), palsvar02)
 
             System.Runtime.InteropServices.Marshal.Copy(Datavaluse2, 0, pointersec, numofbytessec)
 
@@ -2388,4 +2393,68 @@ Public Class MnFrm
 
     End Sub
 
+    Private Function WriteImageToBits(InputDataBytes() As Byte, InputImage As Bitmap, pals As Color()) As Byte()
+        Dim OutputdataBytes As Byte()
+        Dim outputwidth As Integer = 0
+        Dim outputheight As Integer = 0
+        Dim inputwidth As Integer = 0
+        Dim inputheight As Integer = 0
+        Dim byteloopvar As Integer = 0
+        Dim pixelcounter As Integer = 0
+
+        OutputdataBytes = New Byte(InputDataBytes.Count) {}
+
+        While byteloopvar < InputDataBytes.Count
+
+            OutputdataBytes(byteloopvar) = "&H" & Hex(GetIndexOfColor(InputImage.GetPixel(CalcualtePixelWidthLocation(pixelcounter, InputImage.Height, InputImage.Width), CalcualtePixelHeightLocation(pixelcounter, InputImage.Height, InputImage.Width)), pals)) & Hex(GetIndexOfColor(InputImage.GetPixel(CalcualtePixelWidthLocation(pixelcounter + 1, InputImage.Height, InputImage.Width), CalcualtePixelHeightLocation(pixelcounter + 1, InputImage.Height, InputImage.Width)), pals))
+
+            pixelcounter = pixelcounter + 2
+            byteloopvar = byteloopvar + 1
+        End While
+        Return OutputdataBytes
+    End Function
+
+    Private Function GetIndexOfColor(InputColor As Color, pal As Color()) As Integer
+        Dim output As Integer = 0
+        Dim loopvar As Integer = 0
+
+        While loopvar < 16
+            If InputColor = pal(loopvar) Then
+                output = loopvar
+                Exit While
+            End If
+            loopvar = loopvar + 1
+        End While
+
+        Return output
+    End Function
+
+    Private Function CalcualtePixelHeightLocation(pixelcount As Integer, imageheight As Integer, imagewidth As Integer) As Integer
+        Dim outputpoint As Integer = 0
+
+        Dim counter As Integer = pixelcount
+        Dim endcounter As Integer = 0
+        While counter > (imagewidth - 1)
+
+            counter = counter - imagewidth
+
+            endcounter = endcounter + 1
+        End While
+        outputpoint = endcounter
+        Return outputpoint
+    End Function
+
+    Private Function CalcualtePixelWidthLocation(pixelcount As Integer, imageheight As Integer, imagewidth As Integer) As Integer
+        Dim outputpoint As Integer = 0
+
+        Dim counter As Integer = pixelcount
+
+        While counter > (imagewidth - 1)
+
+            counter = counter - (imagewidth)
+        End While
+
+        outputpoint = counter
+        Return outputpoint
+    End Function
 End Class
