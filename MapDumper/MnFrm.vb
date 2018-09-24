@@ -575,7 +575,7 @@ Public Class MnFrm
 
             Using fs As New FileStream(FolderBrowserDialog1.SelectedPath & "\Bank" & MapBank & "_Map" & MapNumber & "_SecondaryPal.bin", FileMode.Open, FileAccess.Read)
                 Using r As New BinaryReader(fs)
-                    fs.Position = 0
+                    fs.Position = 0 + 192
                     palsvar06 = LoadPaletteFromROM(fs)
                     palsvar07 = LoadPaletteFromROM(fs)
                     palsvar08 = LoadPaletteFromROM(fs)
@@ -583,9 +583,12 @@ Public Class MnFrm
                     palsvar10 = LoadPaletteFromROM(fs)
                     palsvar11 = LoadPaletteFromROM(fs)
                     palsvar12 = LoadPaletteFromROM(fs)
-                    palsvar13 = LoadPaletteFromROM(fs)
-                    palsvar14 = LoadPaletteFromROM(fs)
-                    palsvar15 = LoadPaletteFromROM(fs)
+                    'palsvar13 = LoadPaletteFromROM(fs)
+                    'palsvar14 = LoadPaletteFromROM(fs)
+                    'palsvar15 = LoadPaletteFromROM(fs)
+                    palsvar13 = palsvar00
+                    palsvar14 = palsvar00
+                    palsvar15 = palsvar00
                     r.Close()
                     fs.Close()
                 End Using
