@@ -3,6 +3,10 @@
 # Disassembly Conversion Tools
 Simple tools to convert files for easy insertion into Pokeruby and Pokeemerald.
 
-aseriestodis - Converts an Aseries format image for use witht he disassemblies.
+aseriestodis - Converts an Aseries format image for use with the disassemblies.
 
 https://github.com/Gamer2020/DisassemblyConversionTools/tree/master/aseriestodis/bin/Debug
+
+MapDumper - Exports maps from Fire Red or Emerald for use with Pokeemerald.
+
+https://github.com/Gamer2020/DisassemblyConversionTools/tree/master/MapDumper/bin/Debug
