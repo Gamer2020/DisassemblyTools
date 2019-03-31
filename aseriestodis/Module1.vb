@@ -38,20 +38,8 @@ Module Module1
 
             Dim mainbitmap As New Bitmap(ImgFile)
 
-            If Directory.Exists(AppPath & "output\graphics\pokemon\anim_front_pics\") = False Then
-                Directory.CreateDirectory(AppPath & "output\graphics\pokemon\anim_front_pics\")
-            End If
-
-            If Directory.Exists(AppPath & "output\graphics\pokemon\back_pics\") = False Then
-                Directory.CreateDirectory(AppPath & "output\graphics\pokemon\back_pics\")
-            End If
-
-            If Directory.Exists(AppPath & "output\graphics\pokemon\front_pics\") = False Then
-                Directory.CreateDirectory(AppPath & "output\graphics\pokemon\front_pics\")
-            End If
-
-            If Directory.Exists(AppPath & "output\graphics\pokemon\palettes\") = False Then
-                Directory.CreateDirectory(AppPath & "output\graphics\pokemon\palettes\")
+            If Directory.Exists(AppPath & "output\graphics\pokemon\" & JustFileName.Replace(".png", "\")) = False Then
+                Directory.CreateDirectory(AppPath & "output\graphics\pokemon\" & JustFileName.Replace(".png", "\"))
             End If
 
             If mainbitmap.Height = 128 And mainbitmap.Width = 256 Then
@@ -389,12 +377,12 @@ Module Module1
 
                 'indexedONormalFrontBitmapAnimation.MakeTransparent()
 
-                indexedONormalFrontBitmapAnimation.Save(AppPath & "output\graphics\pokemon\anim_front_pics\" & JustFileName.Replace(".png", "_front_pic.png"), Imaging.ImageFormat.Png)
+                indexedONormalFrontBitmapAnimation.Save(AppPath & "output\graphics\pokemon\" & JustFileName.Replace(".png", "\") & "anim_front.png", Imaging.ImageFormat.Png)
 
             End If
 
-            indexedFrontSprite.Save(AppPath & "output\graphics\pokemon\front_pics\" & JustFileName.Replace(".png", "_still_front_pic.png"), Imaging.ImageFormat.Png)
-            indexedBackSprite.Save(AppPath & "output\graphics\pokemon\back_pics\" & JustFileName.Replace(".png", "_back_pic.png"), Imaging.ImageFormat.Png)
+            indexedFrontSprite.Save(AppPath & "output\graphics\pokemon\" & JustFileName.Replace(".png", "\") & "front.png", Imaging.ImageFormat.Png)
+            indexedBackSprite.Save(AppPath & "output\graphics\pokemon\" & JustFileName.Replace(".png", "\") & "back.png", Imaging.ImageFormat.Png)
 
             Dim normalpaltext As String = ""
             Dim shinypaltext As String = ""
@@ -424,8 +412,8 @@ Module Module1
                 palsaveloop = palsaveloop + 1
             End While
 
-            File.WriteAllText(AppPath & "output\graphics\pokemon\palettes\" & JustFileName.Replace(".png", "_palette.pal"), normalpaltext)
-            File.WriteAllText(AppPath & "output\graphics\pokemon\palettes\" & JustFileName.Replace(".png", "_shiny_palette.pal"), shinypaltext)
+            File.WriteAllText(AppPath & "output\graphics\pokemon\" & JustFileName.Replace(".png", "\") & "normal.pal", normalpaltext)
+            File.WriteAllText(AppPath & "output\graphics\pokemon\" & JustFileName.Replace(".png", "\") & "shiny.pal", shinypaltext)
 
         Else
 
