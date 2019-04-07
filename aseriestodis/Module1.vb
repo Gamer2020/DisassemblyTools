@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Drawing
 Imports VB = Microsoft.VisualBasic
+Imports System.Drawing.Color
 
 Module Module1
 
@@ -485,12 +486,37 @@ Module Module1
         While loopvar < 16
             If InputColor = pal(loopvar) Then
                 output = loopvar
-                Exit While
+                GoTo returnlabel
             End If
             loopvar = loopvar + 1
         End While
 
+        output = FindClosestColorInPal(InputColor, pal)
+
+returnlabel:
         Return output
+    End Function
+
+    Private Function FindClosestColorInPal(TargetClr As Color, Clrs As Color()) As Integer
+        Dim leastDistance As Integer = Integer.MaxValue
+        Dim colorIndex As Integer = -1
+
+        For i As Integer = 0 To Clrs.Length - 1
+            Dim redDistance As Integer = CInt(Clrs(i).R) - CInt(TargetClr.R)
+            Dim greenDistance As Integer = CInt(Clrs(i).G) - CInt(TargetClr.G)
+            Dim blueDistance As Integer = CInt(Clrs(i).B) - CInt(TargetClr.B)
+            Dim distance As Integer = (redDistance * redDistance) + (greenDistance * greenDistance) + (blueDistance * blueDistance)
+
+            If distance = 0 Then
+                colorIndex = i
+                Exit For
+            ElseIf distance < leastDistance Then
+                colorIndex = i
+                leastDistance = distance
+            End If
+        Next
+        Return colorIndex
+
     End Function
 
     Private Function CalcualtePixelHeightLocation(pixelcount As Integer, imageheight As Integer, imagewidth As Integer) As Integer
