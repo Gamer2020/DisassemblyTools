@@ -96,106 +96,213 @@ Module Module1
 
             End If
 
-            Dim num11 As Integer = ((1 * &H40) - 1)
-            Dim ivar As UInteger = 0
-            Do While (ivar <= num11)
-                Dim num3 As UInteger = 0
-                Do
-                    palcolor = GetQuantizedPixel(ONormalFrontBitmap, num3, ivar)
-                    If Not Enumerable.Contains(Of Color)(FrontPalette, palcolor) Then
-                        FrontPalette(num) = palcolor
-                        BackPalette(num) = GetQuantizedPixel(OShinyFrontBitmap, num3, ivar)
-                        num = ((num + 1))
-                        If (num > 15) Then
-                            flag = True
-                            Exit Do
-                        End If
-                    End If
-                    num3 += 1
-                Loop While (num3 <= &H3F)
-                If flag Then
-                    Exit Do
-                End If
-                ivar += 1
-            Loop
+            If LoadAnimationFlag = False Then
 
-            Dim num12 As Integer = ((1 * &H40) - 1)
-            Dim j As UInteger = 0
-            Do While (j <= num12)
-                Dim num5 As UInteger = 0
-                Do
-                    palcolor = GetQuantizedPixel(ONormalBackBitmap, num5, j)
-                    If Not Enumerable.Contains(Of Color)(FrontPalette, palcolor) Then
-                        FrontPalette(num) = palcolor
-                        BackPalette(num) = GetQuantizedPixel(OShinyBackBitmap, num5, j)
-                        num = ((num + 1))
-                        If (num > 15) Then
-                            flag = True
-                            Exit Do
+                Dim num11 As Integer = ((1 * &H40) - 1)
+                Dim ivar As UInteger = 0
+                Do While (ivar <= num11)
+                    Dim num3 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(ONormalFrontBitmap, num3, ivar)
+                        If Not Enumerable.Contains(Of Color)(FrontPalette, palcolor) Then
+                            FrontPalette(num) = palcolor
+                            BackPalette(num) = GetQuantizedPixel(OShinyFrontBitmap, num3, ivar)
+                            num = ((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
                         End If
+                        num3 += 1
+                    Loop While (num3 <= &H3F)
+                    If flag Then
+                        Exit Do
                     End If
-                    num5 += 1
-                Loop While (num5 <= &H3F)
-                If flag Then
-                    Exit Do
-                End If
-                j += 1
-            Loop
+                    ivar += 1
+                Loop
 
-            Dim num13 As Integer = ((1 * &H40) - 1)
-            Dim k As UInteger = 0
-            Do While (k <= num13)
-                Dim num7 As UInteger = 0
-                Do
-                    palcolor = GetQuantizedPixel(OShinyFrontBitmap, num7, k)
-                    If Not Enumerable.Contains(Of Color)(BackPalette, palcolor) Then
-                        BackPalette(num) = palcolor
-                        FrontPalette(num) = GetQuantizedPixel(ONormalFrontBitmap, num7, k)
-                        num = CByte((num + 1))
-                        If (num > 15) Then
-                            flag = True
-                            Exit Do
+                Dim num12 As Integer = ((1 * &H40) - 1)
+                Dim j As UInteger = 0
+                Do While (j <= num12)
+                    Dim num5 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(ONormalBackBitmap, num5, j)
+                        If Not Enumerable.Contains(Of Color)(FrontPalette, palcolor) Then
+                            FrontPalette(num) = palcolor
+                            BackPalette(num) = GetQuantizedPixel(OShinyBackBitmap, num5, j)
+                            num = ((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
                         End If
+                        num5 += 1
+                    Loop While (num5 <= &H3F)
+                    If flag Then
+                        Exit Do
                     End If
-                    num7 += 1
-                Loop While (num7 <= &H3F)
-                If flag Then
-                    Exit Do
-                End If
-                k += 1
-            Loop
+                    j += 1
+                Loop
 
-            Dim num14 As Integer = ((1 * &H40) - 1)
-            Dim m As UInteger = 0
-            Do While (m <= num14)
-                Dim num9 As UInteger = 0
-                Do
-                    palcolor = GetQuantizedPixel(OShinyBackBitmap, num9, m)
-                    If Not Enumerable.Contains(Of Color)(BackPalette, palcolor) Then
-                        BackPalette(num) = palcolor
-                        FrontPalette(num) = GetQuantizedPixel(ONormalBackBitmap, num9, m)
-                        num = CByte((num + 1))
-                        If (num > 15) Then
-                            flag = True
-                            Exit Do
+                Dim num13 As Integer = ((1 * &H40) - 1)
+                Dim k As UInteger = 0
+                Do While (k <= num13)
+                    Dim num7 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(OShinyFrontBitmap, num7, k)
+                        If Not Enumerable.Contains(Of Color)(BackPalette, palcolor) Then
+                            BackPalette(num) = palcolor
+                            FrontPalette(num) = GetQuantizedPixel(ONormalFrontBitmap, num7, k)
+                            num = CByte((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
                         End If
+                        num7 += 1
+                    Loop While (num7 <= &H3F)
+                    If flag Then
+                        Exit Do
                     End If
-                    num9 += 1
-                Loop While (num9 <= &H3F)
-                If flag Then
-                    Exit Do
-                End If
-                m += 1
-            Loop
+                    k += 1
+                Loop
 
-            Dim n As Integer = num
-            Do While (n <= 15)
-                FrontPalette(n) = Color.Black
-                BackPalette(n) = Color.Black
-                n += 1
-            Loop
+                Dim num14 As Integer = ((1 * &H40) - 1)
+                Dim m As UInteger = 0
+                Do While (m <= num14)
+                    Dim num9 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(OShinyBackBitmap, num9, m)
+                        If Not Enumerable.Contains(Of Color)(BackPalette, palcolor) Then
+                            BackPalette(num) = palcolor
+                            FrontPalette(num) = GetQuantizedPixel(ONormalBackBitmap, num9, m)
+                            num = CByte((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
+                        End If
+                        num9 += 1
+                    Loop While (num9 <= &H3F)
+                    If flag Then
+                        Exit Do
+                    End If
+                    m += 1
+                Loop
+
+                Dim n As Integer = num
+                Do While (n <= 15)
+                    FrontPalette(n) = Color.Black
+                    BackPalette(n) = Color.Black
+                    n += 1
+                Loop
+
+            End If
 
             If LoadAnimationFlag = True Then
+
+                Dim num112 As Integer = ((1 * &H80) - 1)
+                Dim ivar2 As UInteger = 0
+                Do While (ivar2 <= num112)
+                    Dim num3 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(ONormalFrontBitmapAnimation, num3, ivar2)
+                        If Not Enumerable.Contains(Of Color)(FrontPalette, palcolor) Then
+                            FrontPalette(num) = palcolor
+                            BackPalette(num) = GetQuantizedPixel(OShinyFrontBitmapAnimation, num3, ivar2)
+                            num = ((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
+                        End If
+                        num3 += 1
+                    Loop While (num3 <= &H3F)
+                    If flag Then
+                        Exit Do
+                    End If
+                    ivar2 += 1
+                Loop
+
+                Dim num122 As Integer = ((1 * &H40) - 1)
+                Dim j2 As UInteger = 0
+                Do While (j2 <= num122)
+                    Dim num5 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(ONormalBackBitmapAnimation, num5, j2)
+                        If Not Enumerable.Contains(Of Color)(FrontPalette, palcolor) Then
+                            FrontPalette(num) = palcolor
+                            BackPalette(num) = GetQuantizedPixel(OShinyBackBitmapAnimation, num5, j2)
+                            num = ((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
+                        End If
+                        num5 += 1
+                    Loop While (num5 <= &H3F)
+                    If flag Then
+                        Exit Do
+                    End If
+                    j2 += 1
+                Loop
+
+                Dim num132 As Integer = ((1 * &H80) - 1)
+                Dim k2 As UInteger = 0
+                Do While (k2 <= num132)
+                    Dim num7 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(OShinyFrontBitmapAnimation, num7, k2)
+                        If Not Enumerable.Contains(Of Color)(BackPalette, palcolor) Then
+                            BackPalette(num) = palcolor
+                            FrontPalette(num) = GetQuantizedPixel(ONormalFrontBitmapAnimation, num7, k2)
+                            num = CByte((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
+                        End If
+                        num7 += 1
+                    Loop While (num7 <= &H3F)
+                    If flag Then
+                        Exit Do
+                    End If
+                    k2 += 1
+                Loop
+
+                Dim num142 As Integer = ((1 * &H40) - 1)
+                Dim m2 As UInteger = 0
+                Do While (m2 <= num142)
+                    Dim num9 As UInteger = 0
+                    Do
+                        palcolor = GetQuantizedPixel(OShinyBackBitmapAnimation, num9, m2)
+                        If Not Enumerable.Contains(Of Color)(BackPalette, palcolor) Then
+                            BackPalette(num) = palcolor
+                            FrontPalette(num) = GetQuantizedPixel(ONormalBackBitmapAnimation, num9, m2)
+                            num = CByte((num + 1))
+                            If (num > 15) Then
+                                flag = True
+                                Exit Do
+                            End If
+                        End If
+                        num9 += 1
+                    Loop While (num9 <= &H3F)
+                    If flag Then
+                        Exit Do
+                    End If
+                    m2 += 1
+                Loop
+
+                Dim n2 As Integer = num
+                Do While (n2 <= 15)
+                    FrontPalette(n2) = Color.Black
+                    BackPalette(n2) = Color.Black
+                    n2 += 1
+                Loop
+
+
+
+
                 AnimationNormalPalette = FrontPalette
                 AnimationShinyPalette = BackPalette
             End If
